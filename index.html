@@ -1,0 +1,32 @@
+<!doctype html><html dir="rtl" lang="he"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>קרב התיקים - לייב</title>
+<style>body{font-family:system-ui,Arial;background:#0f1115;color:#eee;margin:0;padding:16px}h1{font-size:22px;margin:0 0 4px}.sub{color:#999;font-size:13px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}.card{background:#1a1d24;border-radius:12px;padding:14px}
+.name{font-size:18px;font-weight:700}.val{font-size:30px;font-weight:800;margin:6px 0}.up{color:#2ecc71}.down{color:#e74c3c}
+table{width:100%;font-size:13px;border-collapse:collapse}td{padding:3px 0;border-top:1px solid #2a2e37}.rank{font-size:13px;color:#f1c40f}</style></head><body>
+<h1>⚔️ קרב התיקים - לייב</h1><div class="sub">מחירים חיים מ-Binance ספוט (api/v3/ticker/price), מתעדכן כל 10 שניות. כסף וירטואלי בלבד. כמויות נכון ל: <span id="asof"></span><br>עדכון אחרון: <span id="ts">טוען...</span></div>
+<div class="grid" id="g"></div>
+<script>
+const ASOF="15.10.2026 09:10 (לפני הביצוע של 18:00)";
+const P=[
+ {name:"עדין",start:1000,cash:888.73,h:{BTC:0.00095706,SOL:0.2794}},
+ {name:"בינוני",start:1000,cash:1000,h:{}},
+ {name:"אגרסיבי",start:1000,cash:1000,h:{}}
+];
+document.getElementById('asof').textContent=ASOF;
+async function tick(){
+ const syms=[...new Set(P.flatMap(p=>Object.keys(p.h)))].map(s=>s+"USDT");
+ let px={};
+ try{ if(syms.length){const r=await fetch("https://api.binance.com/api/v3/ticker/price?symbols="+encodeURIComponent(JSON.stringify(syms)));
+   if(!r.ok) throw 0; (await r.json()).forEach(o=>px[o.symbol]=+o.price);}
+ }catch(e){document.getElementById('ts').textContent="⚠️ בינאנס לא עונה, המחירים לא עודכנו";return;}
+ const rows=P.map(p=>{let v=p.cash,lines=`<tr><td>USDT</td><td>${p.cash.toFixed(2)}</td></tr>`;
+  for(const[c,q]of Object.entries(p.h)){const pr=px[c+"USDT"],w=q*pr;v+=w;lines+=`<tr><td>${c} ${q} @ ${pr.toLocaleString()}</td><td>${w.toFixed(2)}</td></tr>`}
+  return{...p,v,lines,pct:(v/p.start-1)*100}});
+ const order=[...rows].sort((a,b)=>b.pct-a.pct).map(r=>r.name);
+ document.getElementById('g').innerHTML=rows.map(r=>`<div class="card"><div class="rank">מקום ${order.indexOf(r.name)+1}</div><div class="name">${r.name}</div>
+ <div class="val">${r.v.toFixed(2)} USDT</div><div class="${r.pct>=0?'up':'down'}">${r.pct>=0?'+':''}${r.pct.toFixed(2)}% מ-1,000</div><table>${r.lines}</table></div>`).join("");
+ document.getElementById('ts').textContent=new Date().toLocaleTimeString('he-IL');
+}
+tick();setInterval(tick,10000);
+</script></body></html>
