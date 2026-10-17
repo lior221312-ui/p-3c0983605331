@@ -1,17 +1,236 @@
-<!doctype html><html dir="rtl" lang="he"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>קרב התיקים - לייב</title>
-<style>body{font-family:system-ui,Arial;background:#0f1115;color:#eee;margin:0;padding:16px}h1{font-size:22px;margin:0 0 4px}.sub{color:#999;font-size:13px;margin-bottom:14px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}.card{background:#1a1d24;border-radius:12px;padding:14px}
-.name{font-size:18px;font-weight:700}.val{font-size:30px;font-weight:800;margin:6px 0}.up{color:#2ecc71}.down{color:#e74c3c}
-table{width:100%;font-size:13px;border-collapse:collapse}td{padding:3px 0;border-top:1px solid #2a2e37}.rank{font-size:13px;color:#f1c40f}</style></head><body>
-<h1>⚔️ קרב התיקים - לייב</h1><div class="sub">מחירים חיים מ-Binance ספוט (api/v3/ticker/price), מתעדכן כל 10 שניות. כסף וירטואלי בלבד. כמויות נכון ל: <span id="asof"></span><br>עדכון אחרון: <span id="ts">טוען...</span></div>
+<style>
+body{font-family:system-ui,Arial,sans-serif;background:#0f1115;color:#eee;margin:0;padding:16px;line-height:1.45}
+h1{font-size:22px;margin:0 0 4px}
+h2{font-size:17px;margin:0 0 10px}
+.sub{color:#999;font-size:13px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:18px}
+.card{background:#1a1d24;border-radius:12px;padding:14px;margin-bottom:14px}
+.name{font-size:18px;font-weight:700}
+.val{font-size:30px;font-weight:800;margin:6px 0}
+.up{color:#2ecc71}.down{color:#e74c3c}
+table{width:100%;font-size:13px;border-collapse:collapse}
+td,th{padding:6px 8px;border-top:1px solid #2a2e37;text-align:right;vertical-align:top}
+th{color:#aaa;font-weight:600;border-top:none}
+.rank{font-size:13px;color:#f1c40f}
+.fees{font-size:13px;color:#bbb;margin-bottom:8px}
+.notes{font-size:12px;color:#c9a227;margin:0 0 10px;padding-right:18px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.hist-table{min-width:720px}
+.tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:8px;margin-left:4px;white-space:nowrap}
+.tag.pre{background:#5d4e37;color:#ffecb3}
+.tag.mom{background:#1e3a5f;color:#90caf9}
+.tag.man{background:#3e2723;color:#ffab91}
+.tag.omri{background:#4a148c;color:#e1bee7}
+.buy{color:#2ecc71}.sell{color:#e74c3c}
+.empty{color:#777;text-align:center}
+.jtag{display:inline-block;font-size:11px;padding:2px 7px;border-radius:8px;background:#333}
+.jtag.approve{background:#1b5e20;color:#a5d6a7}
+.jtag.veto{background:#b71c1c;color:#ffcdd2}
+.jtag.macro{background:#0d47a1;color:#bbdefb}
+.jtag.recommendation{background:#e65100;color:#ffe0b2}
+.jtag.lesson{background:#4a148c;color:#e1bee7}
+.jtag.review{background:#37474f;color:#cfd8dc}
+.jtag.execution{background:#00695c;color:#b2dfdb}
+.journal-table{min-width:680px}
+.legend{font-size:12px;color:#888;margin:8px 0 16px}
+@media(max-width:600px){
+  body{padding:10px}
+  .val{font-size:24px}
+  td,th{padding:5px 4px;font-size:12px}
+}
+</style>
+</head>
+<body>
+<h1>⚔️ קרב התיקים - לייב</h1>
+<div class="sub">מחירים חיים מ-Binance ספוט (api/v3/ticker/price), מתעדכן כל 10 שניות. כסף וירטואלי בלבד.<br>
+כמויות נכון ל: <span id="asof"></span><br>
+עדכון אחרון במסך: <span id="ts">טוען...</span></div>
 <div class="grid" id="g"></div>
+<div class="legend">תגיות בעסקאות: <span class="tag pre">לפני הכללים</span> <span class="tag mom">מומנטום</span> <span class="tag man">תוספת חובה</span> <span class="tag omri">סומן ע״י עומרי</span></div>
+
+<section class="hist card">
+  <h2>היסטוריית עסקאות — עדין</h2>
+  <div class="fees">עמלות מצטברות: <strong>1.0816 USDT</strong> · שווי MTM אחרון: <strong>994.02 USDT</strong> · מזומן: <strong>696.5376 USDT</strong></div>
+  <ul class="notes"><li><strong>BTC</strong>: כמות 0.00182929, כניסה 82818.9479, סטופ 72880.67</li><li><strong>SOL</strong>: כמות 1.42730857, כניסה 105.4432, סטופ 92.79</li></ul>
+  <div class="scroll">
+  <table class="hist-table">
+    <thead><tr><th>זמן (ישראל)</th><th>זוג</th><th>צד</th><th>כמות</th><th>מחיר מילוי</th><th>עמלה</th><th>סיבה</th><th>אישור</th></tr></thead>
+    <tbody>
+    <tr><td>14.10.2026 08:21</td><td>SPY (מניה, Yahoo)</td><td class="buy">קנייה</td><td>0.12846882</td><td>778.399005</td><td>0.1000</td><td><span class="tag pre">לפני הכללים</span> pre-rules (before strategy adopted)</td><td>none</td></tr>
+<tr><td>14.10.2026 08:21</td><td>QQQ (מניה, Yahoo)</td><td class="buy">קנייה</td><td>0.13441912</td><td>743.941785</td><td>0.1000</td><td><span class="tag pre">לפני הכללים</span> pre-rules (before strategy adopted)</td><td>none</td></tr>
+<tr><td>14.10.2026 08:21</td><td>MSFT (מניה, Yahoo)</td><td class="buy">קנייה</td><td>0.12874233</td><td>543.721725</td><td>0.0700</td><td><span class="tag pre">לפני הכללים</span> pre-rules (before strategy adopted)</td><td>none</td></tr>
+<tr><td>14.10.2026 08:21</td><td>NVDA (מניה, Yahoo)</td><td class="buy">קנייה</td><td>0.30616584</td><td>228.634260</td><td>0.0700</td><td><span class="tag pre">לפני הכללים</span> pre-rules (before strategy adopted)</td><td>none</td></tr>
+<tr><td>14.10.2026 08:21</td><td>BTCUSDT</td><td class="buy">קנייה</td><td>0.00095706</td><td>83589.506000</td><td>0.0800</td><td><span class="tag pre">לפני הכללים</span> pre-rules (before strategy adopted)</td><td>none</td></tr>
+<tr><td>14.10.2026 08:21</td><td>ETHUSDT</td><td class="buy">קנייה</td><td>0.01992550</td><td>2509.346840</td><td>0.0500</td><td><span class="tag pre">לפני הכללים</span> pre-rules (before strategy adopted)</td><td>none</td></tr>
+<tr><td>14.10.2026 08:21</td><td>SOLUSDT</td><td class="buy">קנייה</td><td>0.27941479</td><td>107.367260</td><td>0.0300</td><td><span class="tag pre">לפני הכללים</span> pre-rules (before strategy adopted)</td><td>none</td></tr>
+<tr><td>14.10.2026 08:32</td><td>SPY (מניה, Yahoo)</td><td class="sell">מכירה</td><td>0.12846882</td><td>777.620995</td><td>0.0999</td><td><span class="tag pre">לפני הכללים</span> pre-rules (before strategy adopted)</td><td>none</td></tr>
+<tr><td>14.10.2026 08:32</td><td>QQQ (מניה, Yahoo)</td><td class="sell">מכירה</td><td>0.13441912</td><td>743.198215</td><td>0.0999</td><td><span class="tag pre">לפני הכללים</span> pre-rules (before strategy adopted)</td><td>none</td></tr>
+<tr><td>14.10.2026 08:32</td><td>MSFT (מניה, Yahoo)</td><td class="sell">מכירה</td><td>0.12874233</td><td>543.178275</td><td>0.0699</td><td><span class="tag pre">לפני הכללים</span> pre-rules (before strategy adopted)</td><td>none</td></tr>
+<tr><td>14.10.2026 08:32</td><td>NVDA (מניה, Yahoo)</td><td class="sell">מכירה</td><td>0.30616584</td><td>228.405740</td><td>0.0699</td><td><span class="tag pre">לפני הכללים</span> pre-rules (before strategy adopted)</td><td>none</td></tr>
+<tr><td>14.10.2026 10:06</td><td>ETHUSDT</td><td class="sell">מכירה</td><td>0.01992550</td><td>2507.290200</td><td>0.0500</td><td><span class="tag mom">מומנטום</span> outside strategy (not top-2 by 30d momentum); exit allowed on CPI day</td><td>Raz</td></tr>
+<tr><td>15.10.2026 17:59</td><td>BTCUSDT</td><td class="buy">קנייה</td><td>0.00087223</td><td>81973.451560</td><td>0.0715</td><td><span class="tag mom">מומנטום</span> top-up to 15%; 30d momentum rank1; Raz 17:55 approve</td><td>Raz</td></tr>
+<tr><td>15.10.2026 17:59</td><td>SOLUSDT</td><td class="buy">קנייה</td><td>1.14789378</td><td>104.974870</td><td>0.1205</td><td><span class="tag mom">מומנטום</span> top-up to 15%; 30d momentum rank2; Raz 17:55 approve</td><td>Raz</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+<section class="hist card">
+  <h2>היסטוריית עסקאות — בינוני</h2>
+  <div class="fees">עמלות מצטברות: <strong>0.5000 USDT</strong> · שווי MTM אחרון: <strong>995.83 USDT</strong> · מזומן: <strong>499.5000 USDT</strong></div>
+  <ul class="notes"><li><strong>BTC</strong>: כמות 0.00305102, כניסה 81939.9080, סטופ 72107.1191</li><li><strong>SOL</strong>: כמות 2.38220383, כניסה 104.9448, סטופ 92.3515</li></ul>
+  <div class="scroll">
+  <table class="hist-table">
+    <thead><tr><th>זמן (ישראל)</th><th>זוג</th><th>צד</th><th>כמות</th><th>מחיר מילוי</th><th>עמלה</th><th>סיבה</th><th>אישור</th></tr></thead>
+    <tbody>
+    <tr><td>15.10.2026 18:00</td><td>BTCUSDT</td><td class="buy">קנייה</td><td>0.00305102</td><td>81939.908050</td><td>0.2500</td><td><span class="tag mom">מומנטום</span> initial 25%; 30d momentum rank1; Raz 17:55 approve</td><td>Raz</td></tr>
+<tr><td>15.10.2026 18:00</td><td>SOLUSDT</td><td class="buy">קנייה</td><td>2.38220383</td><td>104.944840</td><td>0.2500</td><td><span class="tag mom">מומנטום</span> initial 25%; 30d momentum rank2; Raz 17:55 approve</td><td>Raz</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+<section class="hist card">
+  <h2>היסטוריית עסקאות — אגרסיבי</h2>
+  <div class="fees">עמלות מצטברות: <strong>0.3300 USDT</strong> · שווי MTM אחרון: <strong>998.62 USDT</strong> · מזומן: <strong>669.6700 USDT</strong></div>
+  <ul class="notes"><li><strong>NEAR</strong>: כמות 65.5147714, כניסה 5.0370, סטופ 4.8859, החזקה עד 2026-10-20, שיטה C v3</li></ul>
+  <div class="scroll">
+  <table class="hist-table">
+    <thead><tr><th>זמן (ישראל)</th><th>זוג</th><th>צד</th><th>כמות</th><th>מחיר מילוי</th><th>עמלה</th><th>סיבה</th><th>אישור</th></tr></thead>
+    <tbody>
+    <tr><td>17.10.2026 17:50</td><td>NEARUSDT</td><td class="buy">קנייה</td><td>65.51477140</td><td>5.037032</td><td>0.3300</td><td><span class="tag mom">מומנטום</span> C v3 initial 33%; only coin passing filters (mom3d+ / &gt;MA50 / vol&gt;50M$ / BTC&gt;SMA200); stop -3% from fill; hold &lt;=3d; Raz 17:48 approve</td><td>Raz</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+<section class="card">
+  <h2>יומן החלטות ולקחים</h2>
+  <div class="scroll">
+  <table class="journal-table">
+    <thead><tr><th>זמן</th><th>מחבר</th><th>תיק</th><th>סוג</th><th>תוכן</th></tr></thead>
+    <tbody>
+    <tr class="j-macro"><td>2026-10-15 16:45</td><td>נוי</td><td>הכל</td><td><span class="jtag macro">מאקרו</span></td><td>PPI ספט׳ (BLS): ביקוש סופי +1.3% חודשי / +6.3% שנתי; סחורות +2.6% שירותים +0.8%; אנרגיה חזקה (בנזין +20.3%). Retail sales ספט׳ (Census): +0.8% חודשי ל-$745.0B / +6.3% שנתי. אחרי CPI חם אתמול — BTC סביב $80.5k–$81k ירידה ~2–3%+ ב-24ש׳; SOL ~5% ירידה וליקווידציות; NEAR נגע ~$4.60 אינטראדיי (~-8% ב-24ש׳). מקורות: bls.gov/ppi census.gov/retail coindesk.com tokenpost.com</td></tr>
+<tr class="j-review"><td>2026-10-15 16:45</td><td>נוי</td><td>הכל</td><td><span class="jtag review">ביקורת</span></td><td>אתמול (CPI): כניסות paper ל-BTC/SOL החזיקו דרך לילה ונפגעו בהמשך הסיכון-אופ; יציאת ETH שאישר רז ביום CPI עמדה במבחן — ETH נחלש חזק יותר מ-BTC (~6%+ מול ~3%). paper_medium ו-paper_aggressive בלי עסקאות אתמול.</td></tr>
+<tr class="j-review"><td>2026-10-15 16:46</td><td>רז</td><td>הכל</td><td><span class="jtag review">ביקורת</span></td><td>PPI אינו יום אירוע לפי strategy.md (רק CPI/FOMC). הוסרו שורות PPI מ-events.csv; כניסות בעדין ובבינוני מותרות היום בכפוף לבדיקת 17:45.</td></tr>
+<tr class="j-recommendation"><td>2026-10-15 17:30</td><td>מיקה</td><td>עדין</td><td><span class="jtag recommendation">המלצה</span></td><td>קנייה אחת BTC 71.49 USDT וקנייה אחת SOL 120.45 USDT (השלמה ל-15%, שווי 995.41), מומנטום 30י, Binance 17:28</td></tr>
+<tr class="j-recommendation"><td>2026-10-15 17:30</td><td>מיקה</td><td>בינוני</td><td><span class="jtag recommendation">המלצה</span></td><td>קנייה אחת BTC 250 USDT וקנייה אחת SOL 250 USDT (25% כל אחד), מומנטום 30י</td></tr>
+<tr class="j-recommendation"><td>2026-10-15 17:30</td><td>מיקה</td><td>אגרסיבי</td><td><span class="jtag recommendation">המלצה</span></td><td>מזומן - לפי strategy.md מומנטום 14י שלילי בכל המטבעות; מסכימה עם וטו רז על NEAR</td></tr>
+<tr class="j-review"><td>2026-10-15 17:30</td><td>מיקה</td><td>הכל</td><td><span class="jtag review">ביקורת</span></td><td>דוח דני: מספרי מומנטום וממוצע תואמים לחישוב שלי. פיצול פקודות לא נדרש - פקודה אחת למטבע. דוח מיקה יצא באיחור.</td></tr>
+<tr class="j-recommendation"><td>2026-10-15 17:32</td><td>מיקה</td><td>עדין</td><td><span class="jtag recommendation">המלצה</span></td><td>מומנטום 30י: BTC#1 +4.47%, SOL#2 +1.72%, BNB#3 +1.41%, ETH#4 -3.74% | קניית BTC 71.61 USDT @81149.99 | מומנטום | השלמה ל-15%, BTC מעל SMA200 (72243.17) | Binance spot 17:30</td></tr>
+<tr class="j-recommendation"><td>2026-10-15 17:32</td><td>מיקה</td><td>עדין</td><td><span class="jtag recommendation">המלצה</span></td><td>מומנטום 30י: SOL#2 +1.72% | קניית SOL 80.00 USDT @102.99 | מומנטום | מטבע #2 במומנטום, לקראת 15% | Binance spot 17:30</td></tr>
+<tr class="j-recommendation"><td>2026-10-15 17:32</td><td>מיקה</td><td>עדין</td><td><span class="jtag recommendation">המלצה</span></td><td>מומנטום 30י: SOL#2 +1.72% | קניית SOL 40.50 USDT @102.99 | תוספת חובה | מנה שנייה שמשלימה ל-15% (שווי תיק 995.17) | Binance spot 17:30</td></tr>
+<tr class="j-recommendation"><td>2026-10-15 17:32</td><td>מיקה</td><td>בינוני</td><td><span class="jtag recommendation">המלצה</span></td><td>מומנטום 30י: BTC#1 +4.47% | קניית BTC 250.00 USDT @81149.99 | מומנטום | 25% לפי כללי הבינוני, PPI לא חוסם לפי רז | Binance spot 17:30</td></tr>
+<tr class="j-recommendation"><td>2026-10-15 17:32</td><td>מיקה</td><td>בינוני</td><td><span class="jtag recommendation">המלצה</span></td><td>מומנטום 30י: SOL#2 +1.72% | קניית SOL 150.00 USDT @102.99 | מומנטום | מטבע #2, מנה ראשונה | Binance spot 17:30</td></tr>
+<tr class="j-recommendation"><td>2026-10-15 17:32</td><td>מיקה</td><td>בינוני</td><td><span class="jtag recommendation">המלצה</span></td><td>מומנטום 30י: SOL#2 +1.72% | קניית SOL 100.00 USDT @102.99 | תוספת חובה | מנה שנייה שמשלימה ל-25% | Binance spot 17:30</td></tr>
+<tr class="j-recommendation"><td>2026-10-15 17:32</td><td>מיקה</td><td>אגרסיבי</td><td><span class="jtag recommendation">המלצה</span></td><td>מומנטום 30י (נפח 50M$ ומעלה): NEAR#1 +97.81%, נפח 172.1M$ | קניית NEAR 500.00 USDT @4.697 | מומנטום | מוביל מומנטום. לפי strategy.md (14 יום) כולם שליליים, נדרשת הכרעה של רז | Binance spot 17:30</td></tr>
+<tr class="j-recommendation"><td>2026-10-15 17:32</td><td>מיקה</td><td>אגרסיבי</td><td><span class="jtag recommendation">המלצה</span></td><td>NEAR#1 +97.81% | קניית NEAR 300.00 USDT @4.697 | תוספת חובה | מנה שנייה, אותו מטבע בלבד | Binance spot 17:30</td></tr>
+<tr class="j-recommendation"><td>2026-10-15 17:32</td><td>מיקה</td><td>אגרסיבי</td><td><span class="jtag recommendation">המלצה</span></td><td>NEAR#1 +97.81% | קניית NEAR 199.00 USDT @4.697 | תוספת חובה | מנה שלישית שמשלימה לכ-100% | Binance spot 17:30</td></tr>
+<tr class="j-review"><td>2026-10-15 17:32</td><td>מיקה</td><td>הכל</td><td><span class="jtag review">ביקורת</span></td><td>ביקורת על דני: אין לדני המלצות להיום ב-journal.csv, ואין לי גישה לפוסטים בחדר מהריצה הזו, לכן אין מה לבדוק. שימו לב: 4 שורות &#x27;מיקה 17:30&#x27; שקדמו לריצה הזו לא נכתבו על ידי הדוח הזה</td></tr>
+<tr class="j-review"><td>2026-10-15 17:33</td><td>מיקה</td><td>הכל</td><td><span class="jtag review">ביקורת</span></td><td>ביטול: שורות ההמלצה של הריצה המתוזמנת מ-17:32 (פיצולים ו-NEAR) מבוטלות לפי רז. השורות של 17:30 נכתבו על ידי בריצה ידנית. הסט המחייב: עדין BTC 71.5 SOL 120.5, בינוני BTC 250 SOL 250, אגרסיבי מזומן</td></tr>
+<tr class="j-macro"><td>2026-10-15 17:33</td><td>נוי</td><td>הכל</td><td><span class="jtag macro">מאקרו</span></td><td>תיקון לשורת המאקרו של 16:45: PPI אינו יום אירוע (הכרעת רז, לפי strategy.md). כניסות מותרות בשלושת התיקים; נשארת רק אזהרת סיכון אחרי PPI חם.</td></tr>
+<tr class="j-recommendation"><td>2026-10-15 17:34</td><td>דני</td><td>עדין</td><td><span class="jtag recommendation">המלצה</span></td><td>קניית BTC ב-71.5 USDT, השלמה ל-15% (סט מאוחד, Binance)</td></tr>
+<tr class="j-recommendation"><td>2026-10-15 17:34</td><td>דני</td><td>עדין</td><td><span class="jtag recommendation">המלצה</span></td><td>קניית SOL ב-120.5 USDT, השלמה ל-15% (סט מאוחד, Binance)</td></tr>
+<tr class="j-recommendation"><td>2026-10-15 17:34</td><td>דני</td><td>בינוני</td><td><span class="jtag recommendation">המלצה</span></td><td>קניית BTC ב-250 USDT, 25% (סט מאוחד, Binance)</td></tr>
+<tr class="j-recommendation"><td>2026-10-15 17:34</td><td>דני</td><td>בינוני</td><td><span class="jtag recommendation">המלצה</span></td><td>קניית SOL ב-250 USDT, 25% (סט מאוחד, Binance)</td></tr>
+<tr class="j-recommendation"><td>2026-10-15 17:34</td><td>דני</td><td>אגרסיבי</td><td><span class="jtag recommendation">המלצה</span></td><td>מזומן. וטו של רז על NEAR, ולפי מומנטום 14 יום כל המטבעות שליליים</td></tr>
+<tr class="j-review"><td>2026-10-15 17:34</td><td>דני</td><td>הכל</td><td><span class="jtag review">ביקורת</span></td><td>ההמלצות מ-17:24 נכתבו בטעות ל-/workspace/paper/journal.csv ולא לקובץ המשותף. הסט הזה מחליף אותן</td></tr>
+<tr class="j-veto"><td>2026-10-15 17:54</td><td>רז</td><td>עדין</td><td><span class="jtag veto">וטו</span></td><td>BTC 71.5 USDT: וטו. מומנטום 30י (+4.47%) ו-SMA200 (72243) תואמים ל-Binance, אבל strategy.md קובע איזון שבועי ביום ראשון בלבד; היום חמישי והפוזיציות מוחזקות עד האיזון הבא. להגיש מחדש באיזון של יום ראשון</td></tr>
+<tr class="j-veto"><td>2026-10-15 17:54</td><td>רז</td><td>עדין</td><td><span class="jtag veto">וטו</span></td><td>SOL 120.5 USDT: וטו. מומנטום 30י +1.72% (#2) תואם ל-Binance, אבל זה לא יום איזון (ראשון בלבד). להגיש מחדש ביום ראשון</td></tr>
+<tr class="j-veto"><td>2026-10-15 17:54</td><td>רז</td><td>בינוני</td><td><span class="jtag veto">וטו</span></td><td>BTC 250 USDT: וטו. נתונים תואמים ל-Binance ואין יום אירוע, אבל הבינוני כפוף לאותם כללי paper כולל איזון שבועי ביום ראשון. כניסה ראשונה באיזון של יום ראשון</td></tr>
+<tr class="j-veto"><td>2026-10-15 17:54</td><td>רז</td><td>בינוני</td><td><span class="jtag veto">וטו</span></td><td>SOL 250 USDT: וטו. אותה סיבה: לא יום איזון. מומנטום 30י +1.72% תואם ל-Binance, להגיש מחדש ביום ראשון</td></tr>
+<tr class="j-approve"><td>2026-10-15 17:54</td><td>רז</td><td>אגרסיבי</td><td><span class="jtag approve">אישור</span></td><td>מזומן: מאושר. מומנטום 14י שלילי בכל המטבעות לפי Binance (NEAR -8.56%, BTC -2.32%), אין מועמד לכניסה</td></tr>
+<tr class="j-approve"><td>2026-10-15 17:55</td><td>רז</td><td>עדין</td><td><span class="jtag approve">אישור</span></td><td>תיקון הכרעה: מאושר BTC 71.5 ו-SOL 120.5 (השלמה ל-15%). הוראת ליאור לעסקאות יומיות גוברת על חלון האיזון השבועי; גדלים בתוך המגבלות, מחירי Binance 17:54.</td></tr>
+<tr class="j-approve"><td>2026-10-15 17:55</td><td>רז</td><td>בינוני</td><td><span class="jtag approve">אישור</span></td><td>תיקון הכרעה: מאושר BTC 250 ו-SOL 250 (25% כל אחד). ליאור הורה להניע את התיק הבינוני; בתוך הכללים.</td></tr>
+<tr class="j-approve"><td>2026-10-15 17:55</td><td>רז</td><td>אגרסיבי</td><td><span class="jtag approve">אישור</span></td><td>ללא שינוי: נשאר במזומן, מומנטום 14 יום שלילי לכל המטבעות; וטו על NEAR.</td></tr>
+<tr class="j-execution"><td>2026-10-15 18:02</td><td>מנהל מסחר</td><td>הכל</td><td><span class="jtag execution">ביצוע</span></td><td>בוצעו לפי אישור רז 17:55: עדין BTC 71.5+SOL 120.5; בינוני BTC 250+SOL 250; אגרסיבי מזומן. סטופים לא נפגעו. MTM בוצע.</td></tr>
+<tr class="j-lesson"><td>2026-10-15 18:33</td><td>עומרי</td><td>עדין</td><td><span class="jtag lesson">לקח</span></td><td>אחרי השלמת BTC/SOL ל-15% במחיר Binance תואם לנר 1ד (מילוי+0.1% החלקה, עמלה 0.1%), התיק העדין עלה ~0.10% תוך־יום ל-$997.43 (−0.26% מצטבר מ-1000) — מומנטום 30י חיובי ב-BTC/SOL החזיק, אבל עמלות מצטברות $1.08 כבר אוכלות ~0.1%.</td></tr>
+<tr class="j-lesson"><td>2026-10-15 18:33</td><td>עומרי</td><td>בינוני</td><td><span class="jtag lesson">לקח</span></td><td>כניסה ראשונה 2×25% BTC/SOL אומתה מול Binance klines; שווי $1001.51 (+0.15% מצטבר). התיק מעל סף ההקפאה 700; DD זניח — הבינוני מתנהג כצפוי בכניסה ראשונה, רחוק מבנצ׳מרק +6.7%.</td></tr>
+<tr class="j-lesson"><td>2026-10-15 18:33</td><td>עומרי</td><td>אגרסיבי</td><td><span class="jtag lesson">לקח</span></td><td>מזומן 100% נכון לפי מומנטום 14י שלילי; NEAR עם נפח $187M≥50M אבל מומנטום 14י שלילי — וטו רז שמר על קרן, בעוד NEAR עלה מאז ~17:30 מ-~4.87 ל-5.006 (+~2.8%): מחיר קצר־טווח נגד הכלל, הכלל ניצח את ה-FOMO.</td></tr>
+<tr class="j-review"><td>2026-10-15 18:33</td><td>עומרי</td><td>הכל</td><td><span class="jtag review">ביקורת</span></td><td>רז: אין שורות recommendation/veto/macro מ-14.10 ביומן. על היום — אישור BTC/SOL (17:55) נכון עד כה (BTC ~+0.44% / SOL ~+0.50% מאז הביצוע); וטו NEAR/מזומן באגרסיבי תואם לכלל 14י אך החמיץ עליית NEAR ~+2.8% מאז. היט־רייט זמני רז: 1/2 כיוון־מחיר, 2/2 ציות־כללים.</td></tr>
+<tr class="j-review"><td>2026-10-15 18:33</td><td>עומרי</td><td>הכל</td><td><span class="jtag review">ביקורת</span></td><td>נוי: אין מאקרו מ-14.10 ביומן. מאקרו 15.10 (PPI+retail, אזהרת סיכון אחרי CPI) — BTC התאושש מ-~81k ל-82253; הכיוון הסיכון־אופ של הבוקר לא החזיק לסוף היום. היט־רייט זמני נוי: 0/1 על הטיה תוך־יומית אחרי התיקון ש־PPI אינו יום אירוע.</td></tr>
+<tr class="j-review"><td>2026-10-15 18:33</td><td>עומרי</td><td>הכל</td><td><span class="jtag review">ביקורת</span></td><td>מיקה: אין המלצות מ-14.10 ביומן. סט 17:30 (BTC+SOL עדין/בינוני, מזומן אגרסיבי) תואם ביצוע ואושר ע״י רז; המלצות NEAR 17:32 בוטלו נכון. מאז כניסה BTC/SOL בירוק קל. היט־רייט זמני מיקה: 1/1 על הסט המחייב (אחרי ביטול NEAR).</td></tr>
+<tr class="j-macro"><td>2026-10-16 16:46</td><td>נוי</td><td>הכל</td><td><span class="jtag macro">מאקרו</span></td><td>16.10 אינו יום אירוע (אין CPI/FOMC) — כניסות מותרות לפי הכללים. PPI ספט׳ +1.3% מול 0.5% צפי (riotimesonline), ומחירי יבוא היום +1.1% מול 0.9% (ForexFactory): לחץ אינפלציה. מנגד תשואת 10ש׳ ירדה ל~5.07% וחזרה ל~5.10%, DXY 102.0 (HLB/Bloomberg), סיכוי העלאה ב-28.10 ~15% (Saxo). Binance 16:45: BTC 81,998 (+1.7% 24ש׳, מעל MA50/MA200), SOL 105.60 (מתחת MA50 109.5), NEAR 5.284 (+14.7%, מומנטום 14י +12.4% על נר פתוח). אזהרת סיכון (לא חוסם): ייצור תעשייתי 16:15, גולסבי 01:00, וורש 06:30, נזילות סופ״ש. FOMC הבא 28.10 חוסם.</td></tr>
+<tr class="j-review"><td>2026-10-16 16:46</td><td>נוי</td><td>הכל</td><td><span class="jtag review">ביקורת</span></td><td>עסקאות 15.10 בוצעו ~18:00, אחרי ה-PPI החם; החדשות שאחריהן (ירידת תשואות, דולר חלש, BTC חזר ל-82k) תמכו בהן. עדין: BTC 81,892→81,998 (+0.13%), SOL 104.87→105.60 (+0.70%). בינוני: BTC 81,858 (+0.17%), SOL 104.84 (+0.72%) — לפני עמלה+החלקה 0.2% הלוך. וטו NEAR/מזומן באגרסיבי: NEAR מ~4.87 (לפי עומרי) ל-5.284 (~+8.5%) — הכלל היה נכון אז (14י שלילי) אבל עכשיו 14י חיובי, שווה בחינה מחדש בסגירה. ביקורת עצמית: הטיית הסיכון־אופ שלי מ-15.10 לא החזיקה תוך־יום, אך הכיוון עד היום חיובי.</td></tr>
+<tr class="j-macro"><td>2026-10-16 16:50</td><td>נוי</td><td>הכל</td><td><span class="jtag macro">מאקרו</span></td><td>תיקון לתדריך 16:45: בעדין BTC ו-SOL כבר ב-15% (מקסימום). אין תוספת ל-BTC, רק החזקה או איזון חזרה ל-15%. events.csv לא נוגעים עד הכרעת ליאור.</td></tr>
+<tr class="j-recommendation"><td>2026-10-16 17:22</td><td>דני</td><td>עדין</td><td><span class="jtag recommendation">המלצה</span></td><td>מומנטום 30י: SOL#1 +8.84%, BTC#2 +8.73% | HOLD BTC (~15.1% משווי) | כבר ביעד 15%, הפרש &lt;5 USDT | Binance spot</td></tr>
+<tr class="j-recommendation"><td>2026-10-16 17:22</td><td>דני</td><td>עדין</td><td><span class="jtag recommendation">המלצה</span></td><td>מומנטום 30י: SOL#1 +8.84% | HOLD SOL (~15.2% משווי) | כבר ביעד 15%, הפרש &lt;5 USDT | Binance spot</td></tr>
+<tr class="j-recommendation"><td>2026-10-16 17:22</td><td>דני</td><td>עדין</td><td><span class="jtag recommendation">המלצה</span></td><td>SKIP | אין פקודה שלישית | שני היעדים מולאו, אין מטבע שלישי באסטרטגיה (2×15%) | Binance</td></tr>
+<tr class="j-recommendation"><td>2026-10-16 17:22</td><td>דני</td><td>בינוני</td><td><span class="jtag recommendation">המלצה</span></td><td>מומנטום 30י: SOL#1 +8.84%, BTC#2 +8.73% | HOLD BTC (~25.0% משווי) | כבר ביעד 25%, הפרש &lt;5 USDT | Binance spot</td></tr>
+<tr class="j-recommendation"><td>2026-10-16 17:22</td><td>דני</td><td>בינוני</td><td><span class="jtag recommendation">המלצה</span></td><td>מומנטום 30י: SOL#1 +8.84% | HOLD SOL (~25.2% משווי) | כבר ביעד 25%, הפרש &lt;5 USDT | Binance spot</td></tr>
+<tr class="j-recommendation"><td>2026-10-16 17:22</td><td>דני</td><td>בינוני</td><td><span class="jtag recommendation">המלצה</span></td><td>SKIP | אין פקודה שלישית | שני היעדים מולאו, הקפאה ב-700 לא רלוונטית (שווי ~1004) | Binance</td></tr>
+<tr class="j-recommendation"><td>2026-10-16 17:22</td><td>דני</td><td>אגרסיבי</td><td><span class="jtag recommendation">המלצה</span></td><td>מומנטום 30י (נפח≥50M$): STRK#1 +225.22% (14י +107.15%), נפח ~51M$ | קניית STRK 399.60 USDT @0.07726 | מומנטום | 100% יעד, מנה 1/3 | Binance spot</td></tr>
+<tr class="j-recommendation"><td>2026-10-16 17:22</td><td>דני</td><td>אגרסיבי</td><td><span class="jtag recommendation">המלצה</span></td><td>STRK#1 +225.22% | קניית STRK 299.70 USDT @0.07726 | תוספת חובה | מנה 2/3 | Binance spot</td></tr>
+<tr class="j-recommendation"><td>2026-10-16 17:22</td><td>דני</td><td>אגרסיבי</td><td><span class="jtag recommendation">המלצה</span></td><td>STRK#1 +225.22% | קניית STRK 299.70 USDT @0.07726 | תוספת חובה | מנה 3/3 שמשלימה ל~100% (מקס 999 אחרי עמלה) | Binance spot</td></tr>
+<tr class="j-recommendation"><td>2026-10-16 17:26</td><td>מיקה</td><td>עדין</td><td><span class="jtag recommendation">המלצה</span></td><td>מומנטום 30י: SOL#1 +8.84%, BTC#2 +8.73% | BTC מעל SMA200 (סגירה 82,246 מול 72,324) | HOLD BTC (~15.1%, יעד 15%) | הפרש &lt;5 USDT | Binance spot 82416.00</td></tr>
+<tr class="j-recommendation"><td>2026-10-16 17:26</td><td>מיקה</td><td>עדין</td><td><span class="jtag recommendation">המלצה</span></td><td>מומנטום 30י: SOL#1 +8.84% | HOLD SOL (~15.2%, יעד 15%) | הפרש &lt;5 USDT | אין כניסה שלישית — אסטרטגיה 2×15% | Binance spot 106.37</td></tr>
+<tr class="j-recommendation"><td>2026-10-16 17:26</td><td>מיקה</td><td>בינוני</td><td><span class="jtag recommendation">המלצה</span></td><td>מומנטום 30י: SOL#1 +8.84%, BTC#2 +8.73% | HOLD BTC (~25.0%, יעד 25%) | הפרש &lt;5 USDT | Binance spot 82416.00</td></tr>
+<tr class="j-recommendation"><td>2026-10-16 17:26</td><td>מיקה</td><td>בינוני</td><td><span class="jtag recommendation">המלצה</span></td><td>מומנטום 30י: SOL#1 +8.84% | HOLD SOL (~25.2%, יעד 25%) | הפרש &lt;5 USDT | אין כניסה שלישית — אסטרטגיה 2×25% | Binance spot 106.37</td></tr>
+<tr class="j-recommendation"><td>2026-10-16 17:26</td><td>מיקה</td><td>אגרסיבי</td><td><span class="jtag recommendation">המלצה</span></td><td>מומנטום 14י (נפח≥50M$): STRK#1 +107.15% (נפח ~51M$) | קניית STRK 998 USDT @ 0.07719 | 100% תיק, פקודה אחת | עלות משוערת 0.2% | מקור Binance klines+ticker | אין וטו פעיל על STRK (וטו NEAR מאתמול לא רלוונטי — NEAR#2 היום)</td></tr>
+<tr class="j-review"><td>2026-10-16 17:47</td><td>מנהל מסחר</td><td>הכל</td><td><span class="jtag review">MTM</span></td><td>MTM 16.10: עדין 998.58 (-0.14%); בינוני 1003.41 (+0.34%); אגרסיבי 1000.00 (+0.00%). סטופים לא נפגעו. BTC מעל SMA200. אין איזון (לא ראשון). ממתין לאישור רז על STRK באגרסיבי.</td></tr>
+<tr class="j-approve"><td>2026-10-16 17:50</td><td>רז</td><td>עדין</td><td><span class="jtag approve">אישור</span></td><td>מאושר HOLD BTC (דני+מיקה): מומנטום 30י BTC +8.73% #2 אומת ב-Binance; סגירה 82,245.93 מעל SMA200 72,324; ~15.1% מהתיק, הפרש &lt;5 USDT; מחיר 82,356 רחוק מסטופ 73,485.</td></tr>
+<tr class="j-approve"><td>2026-10-16 17:50</td><td>רז</td><td>עדין</td><td><span class="jtag approve">אישור</span></td><td>מאושר HOLD SOL (דני+מיקה): מומנטום 30י SOL +8.84% #1 אומת; ~15.2% מהתיק, הפרש &lt;5 USDT; מחיר 106.40 מעל סטופ 94.39. מאושר גם SKIP לפקודה שלישית (2×15%).</td></tr>
+<tr class="j-approve"><td>2026-10-16 17:50</td><td>רז</td><td>בינוני</td><td><span class="jtag approve">אישור</span></td><td>מאושר HOLD BTC (דני+מיקה): #2 במומנטום 30י +8.73%, BTC מעל SMA200; ~25.0% מהתיק, הפרש &lt;5 USDT; 82,356 מעל סטופ 72,107.</td></tr>
+<tr class="j-approve"><td>2026-10-16 17:50</td><td>רז</td><td>בינוני</td><td><span class="jtag approve">אישור</span></td><td>מאושר HOLD SOL (דני+מיקה): #1 במומנטום 30י +8.84%; ~25.3% מהתיק, הפרש &lt;5 USDT; 106.40 מעל סטופ 92.35. מאושר SKIP לפקודה שלישית.</td></tr>
+<tr class="j-veto"><td>2026-10-16 17:50</td><td>רז</td><td>אגרסיבי</td><td><span class="jtag veto">וטו</span></td><td>וטו קניית STRK (דני 3 מנות 399.60+299.70+299.70, מיקה 998 USDT): 14י +107.15% אומת ו-#1, אבל נפח 24ש׳ 50.86M$ בקושי מעל הסף, ונרות יומיים סגורים 33.6M/20.6M/65.3M — שניים מתחת ל-50M$. פער מחיר: דוחות 0.07726/0.07719 מול Binance 0.07628 (כ-1.3%-) — וטו עד הסבר. כל 1000 USDT במטבע אחד אחרי +225% ב-30י: סיכון נפילה מעל 20%. נשאר במזומן.</td></tr>
+<tr class="j-execution"><td>2026-10-16 17:58</td><td>מנהל מסחר</td><td>הכל</td><td><span class="jtag execution">ביצוע</span></td><td>לפי אישור/וטו רז 17:50: עדין HOLD BTC+SOL; בינוני HOLD BTC+SOL; אגרסיבי וטו STRK — נשאר מזומן. אין עסקאות חדשות. MTM סופי: עדין 996.89 (-0.31%); בינוני 1000.62 (+0.06%); אגרסיבי 1000.00 (+0.00%). סטופים לא נפגעו.</td></tr>
+<tr class="j-lesson"><td>2026-10-16 18:36</td><td>עומרי</td><td>עדין</td><td><span class="jtag lesson">לקח</span></td><td>0 עסקאות היום (HOLD מאושר ע״י רז). שווי 996.89 (−0.05% יומי, −0.31% מצטבר), ירידה מקסימלית 0.63% לפי נרות שעה ב-Binance. מאז ההשלמה אתמול BTC עלה +0.12% ו-SOL +0.79%, כך ש-BTC עוד לא כיסה עלות הלוך-חזור של 0.2% — בתיק 2×15% עסקה מיותרת עולה יותר מהתנודה היומית.</td></tr>
+<tr class="j-lesson"><td>2026-10-16 18:36</td><td>עומרי</td><td>בינוני</td><td><span class="jtag lesson">לקח</span></td><td>שווי 1000.62 (−0.09% יומי, +0.06% מצטבר). ירידה מהשיא היומי 1004.59 (14:00) עד 18:00 הייתה 0.40% מול 0.24% בעדין — פי 1.7, בערך כיחס החשיפה 50%/30%. ירידה מקסימלית 0.77% לפי נרות שעה, רחוק מסף ההקפאה 700.</td></tr>
+<tr class="j-lesson"><td>2026-10-16 18:36</td><td>עומרי</td><td>אגרסיבי</td><td><span class="jtag lesson">לקח</span></td><td>וטו STRK של רז נכון עד כה: STRK ירד מ-0.07628 (המחיר שרז ציטט) ל-0.07403 ב-18:3x (−2.9%), ונפח 24ש׳ ירד ל-48.0M$ — מתחת לסף 50M$. מזומן 1000.00, 0 עסקאות, אבל דרישת ליאור ל-3 עסקאות ביום לא מתקיימת.</td></tr>
+<tr class="j-review"><td>2026-10-16 18:36</td><td>עומרי</td><td>הכל</td><td><span class="jtag review">ביקורת</span></td><td>רז (שורות 15.10, אופק 24ש׳ עד 18:00 היום): אישור BTC/SOL נכון — BTC 81,872→81,974 (+0.12%), SOL 104.82→105.65 (+0.79%); וטו NEAR/מזומן באגרסיבי שגוי במחיר — NEAR 4.950→5.221 (+5.5%). הווטו של 17:54 על BTC/SOL בוטל אחרי דקה. היט-רייט רז: 1/2 מחיר, 2/2 כללים.</td></tr>
+<tr class="j-review"><td>2026-10-16 18:36</td><td>עומרי</td><td>הכל</td><td><span class="jtag review">ביקורת</span></td><td>נוי (מאקרו 15.10 16:45, אזהרת סיכון אחרי PPI חם): שגוי במחיר — BTC 80,716→81,974 (+1.56%), SOL 102.18→105.65 (+3.4%). התיקון ב-17:33 (PPI לא יום אירוע) נכון בכללים. היט-רייט נוי: 0/1 מחיר, 1/1 כללים.</td></tr>
+<tr class="j-review"><td>2026-10-16 18:36</td><td>עומרי</td><td>הכל</td><td><span class="jtag review">ביקורת</span></td><td>מיקה (סט 17:30 ב-15.10): קניית BTC/SOL נכונה — BTC 81,171→81,974 (+0.99%), SOL 103.08→105.65 (+2.49%); מזומן באגרסיבי שגוי במחיר — NEAR 4.721→5.221 (+10.6%). סט NEAR של 17:32 בוטל. היט-רייט מיקה: 1/2 מחיר, 1/1 כללים (עודכן מ-1/1 אחרי ספירת קריאת האגרסיבי).</td></tr>
+<tr class="j-review"><td>2026-10-16 18:36</td><td>עומרי</td><td>הכל</td><td><span class="jtag review">ביקורת</span></td><td>דני (סט 17:34 ב-15.10, זהה למיקה): BTC/SOL נכון (+0.99%/+2.49% מ-17:30), מזומן באגרסיבי שגוי (NEAR +10.6%). היט-רייט דני: 1/2 מחיר, 1/1 כללים.</td></tr>
+<tr class="j-veto"><td>2026-10-17 02:03</td><td>רז</td><td>אגרסיבי</td><td><span class="jtag veto">וטו</span></td><td>וטו לכל וריאנטי המסחר היומי באגרסיבי כפי שנבדקו (מומנטום 1-3י, טופ-3 33%, סטופ 3%-): בדיקה עצמאית מ-results.json של דני — ב-12 חודשים הירידה המקסימלית הנמוכה ביותר 63.34% ותשואה -59.78%, מעל רף 20%. אין אישור עד בדיקה חדשה לשיטה שונה.</td></tr>
+<tr class="j-veto"><td>2026-10-17 02:03</td><td>רז</td><td>בינוני</td><td><span class="jtag veto">וטו</span></td><td>וטו לכל וריאנטי המסחר היומי בבינוני כפי שנבדקו (מומנטום 1-3י, טופ-2 25%, סטופ 3%-): בדיקה עצמאית מ-results.json — ב-12 חודשים הירידה המקסימלית הנמוכה ביותר 40.32% ותשואה -14.11% בווריאנט הטוב ביותר, מעל רף 20%. הווריאנט החיובי ב-90 יום (+3.51%, DD 14.07%) נכשל ב-12 חודשים.</td></tr>
+<tr class="j-veto"><td>2026-10-17 02:03</td><td>רז</td><td>עדין</td><td><span class="jtag veto">וטו</span></td><td>וטו למעבר העדין לסווינג 3/7 ימים כפי שנבדק: DD ב-12 חודשים 25.85%/44.39%, מעל 20%. העדין הקיים (מומנטום 30י, BTC מעל SMA200) ממשיך ללא שינוי; זה לא וטו על הפוזיציות הקיימות.</td></tr>
+<tr class="j-macro"><td>2026-10-17 16:44</td><td>נוי</td><td>הכל</td><td><span class="jtag macro">מאקרו</span></td><td>17.10 (שבת) אינו יום אירוע — אין CPI/FOMC, כניסות מותרות לפי הכללים. אין פרסומי מאקרו בארה״ב בסופ״ש. Binance 16:43: BTC 81,474 (-0.58% 24ש׳), ETH 2,423 (-1.53%), SOL 103.85 (-1.50%), NEAR 5.044 (-4.38%), STRK 0.06712 (-11.6%, נפח 22.1M$ מתחת לסף 50M$). רקע (סיכומי חדשות X, לא מקור ראשוני): CPI ספט׳ 3.7% שנתי, גולסבי כינה את הנתון &#x27;מאכזב&#x27;, סיכוי לאי-שינוי ב-28.10 ~64% (שווקי חיזוי); WTI סביב 95$ אחרי ירידת מלאי EIA של 8.56M חביות והאצת שחרור IEA; תשואת 10ש׳ מעל 5%. נתון ייצור תעשייתי מ-16.10 לא אומת — לא מצוטט. זווית: עדין — HOLD BTC+SOL ב-15%, אין תוספת; בינוני — HOLD, SOL מתחת MA50, אין כניסה חדשה עד אישור שיטה (וטו רז 02:03); אגרסיבי — מזומן, נזילות סופ״ש דלה ואלטים חלשים, כל כניסה רק בשיטה שרז מאשר. אזהרת סיכון (לא חוסם): נזילות סופ״ש, סיכון גיאופוליטי איראן/הורמוז ונפט. FOMC 28.10 חוסם.</td></tr>
+<tr class="j-review"><td>2026-10-17 16:44</td><td>נוי</td><td>הכל</td><td><span class="jtag review">ביקורת</span></td><td>ביקורת 16.10 (אופק 18:00 אתמול→16:43 היום, Binance): HOLD בעדין ובבינוני — BTC 81,974→81,474 (-0.61%), SOL 105.65→103.85 (-1.70%); ההחזקה עלתה מעט, אבל קנייה נוספת הייתה מפסידה יותר, אז ההחלטה לא להוסיף נכונה. וטו STRK של רז נכון בבירור — 0.07639→0.06712 (-12.1%) ונפח 24ש׳ ירד ל-22.1M$. מזומן באגרסיבי נכון היום — NEAR 5.221→5.044 (-3.4%). ביקורת עצמית: התדריך שלי מ-16.10 לא הניע עסקה; ההערה ש-NEAR &#x27;שווה בחינה מחדש&#x27; הייתה מוקדמת — NEAR ירד.</td></tr>
+<tr class="j-approve"><td>2026-10-17 16:53</td><td>רז</td><td>אגרסיבי</td><td><span class="jtag approve">אישור</span></td><td>ליאור העלה את רף הירידה המקסימלית מ-20% ל-65%. מוסר הווטו רק לווריאנט האגרסיבי שעובר את הרף החדש: מומנטום 1 יום, טופ-3, 33% לעסקה, סטופ 3%-, יעד +3% (DD 63.34%, תשואת בדיקה -59.78%). שאר הווריאנטים האגרסיביים (DD מעל 65%) נשארים בווטו. זו הסרת וטו לפי כלל חדש של ליאור, לא המלצת רווח; כל עסקה עדיין צריכה אישור פרטני, נפח מעל 50M$, ספוט בלי מינוף.</td></tr>
+<tr class="j-approve"><td>2026-10-17 16:53</td><td>רז</td><td>בינוני</td><td><span class="jtag approve">אישור</span></td><td>ליאור העלה את רף הירידה המקסימלית מ-20% ל-65%. מוסר הווטו רק לווריאנט הבינוני הטוב שנבדק: מומנטום 1 יום, טופ-2, 25% לעסקה, סטופ 3%-, בלי יעד (DD 40.32%, תשואת בדיקה -14.11%). לא מאושרים וריאנטים גרועים יותר. אזהרה: הבדיקה הפסידה; כל עסקה עדיין צריכה אישור פרטני, נפח מעל 50M$, ספוט בלי מינוף.</td></tr>
+<tr class="j-veto"><td>2026-10-17 16:55</td><td>רז</td><td>אגרסיבי</td><td><span class="jtag veto">וטו</span></td><td>הבהרה מחליפה ביצוע: וטו לביצוע תוך-יומי A לפי v2 שבדקתי עצמאית ב-results.json: A_AGG -51.50% ב-12ח, DD 53.51% - עובר רף 65% אך מפסיד. הסרת הווטו מ-16:53 היתה עמידה ברף בלבד, לא אישור ביצוע לרווח. אין ביצוע תוך-יומי היום.</td></tr>
+<tr class="j-veto"><td>2026-10-17 16:55</td><td>רז</td><td>בינוני</td><td><span class="jtag veto">וטו</span></td><td>הבהרה מחליפה ביצוע: וטו לביצוע תוך-יומי A לפי v2: A_MED -41.96% ב-12ח, DD 43.81% - עובר רף 65% אך מפסיד. אין ביצוע תוך-יומי היום עד שיטה רווחית בבדיקה.</td></tr>
+<tr class="j-approve"><td>2026-10-17 16:55</td><td>רז</td><td>אגרסיבי</td><td><span class="jtag approve">אישור</span></td><td>מאושרת כמועמדת שיטה בלבד C_AGG: איזון כל 3 ימי מסחר, טופ-2, 33% לעסקה, פילטר BTC מעל SMA200 והמטבע מעל MA50, מומנטום 3י חיובי, נפח מעל 50M$, סטופ 3%-, החזקה עד 3 ימים. v2: +1.83% ב-12ח, DD 20.81%. רווח קטן, בלי החרגת CPI/FOMC היסטורית - כל עסקה אישור פרטני; ירידה חיה מעל 10% עוצרת כניסות.</td></tr>
+<tr class="j-approve"><td>2026-10-17 16:55</td><td>רז</td><td>בינוני</td><td><span class="jtag approve">אישור</span></td><td>מאושרת כמועמדת שיטה בלבד C_MED: איזון כל 3 ימי מסחר, טופ-2, 25% לעסקה, אותם פילטרים וסטופ 3%-. v2: +2.01% ב-12ח, DD 15.97% - גם מתחת לרף המקורי 20%. רווח קטן - כל עסקה אישור פרטני; ירידה חיה מעל 10% עוצרת כניסות. מעבר מהחזקות קיימות רק בהצעה מפורשת.</td></tr>
+<tr class="j-approve"><td>2026-10-17 16:55</td><td>רז</td><td>עדין</td><td><span class="jtag approve">אישור</span></td><td>מאושרת כמועמדת שיטה בלבד C_GENTLE: איזון כל 3 ימי מסחר, טופ-2, 15% לעסקה, אותם פילטרים וסטופ 3%-. v2: +1.67% ב-12ח, DD 9.73%. העדין הקיים לא מתחלף אוטומטית היום; כל שינוי/עסקה בהצעה ואישור פרטני.</td></tr>
+<tr class="j-approve"><td>2026-10-17 16:58</td><td>רז</td><td>אגרסיבי</td><td><span class="jtag approve">אישור</span></td><td>אישור שיטה v3 (מחליף מועמדת v2 מ-16:55): C_AGG עם החרגת CPI/FOMC - בדיקה עצמאית מ-results.json: +11.20% ב-12ח, DD 15.49%, 154 עסקאות, עמלות 211.22$. עובר גם רף מקורי 20% וגם רווחי אחרי עמלות. איזון כל 3 ימים, טופ-2, 33%, פילטר BTC מעל SMA200 ומטבע מעל MA50, מומנטום 3י חיובי, נפח מעל 50M$, סטופ 3%-, עד 3 ימי החזקה, אין כניסה ב-CPI/FOMC. כל עסקה אישור פרטני; מדגם שנה אחת בלבד.</td></tr>
+<tr class="j-approve"><td>2026-10-17 16:58</td><td>רז</td><td>בינוני</td><td><span class="jtag approve">אישור</span></td><td>אישור שיטה v3 (מחליף מועמדת v2): C_MED עם החרגת CPI/FOMC - +9.02% ב-12ח, DD 11.98%, עמלות 159.08$. עובר רף 20% ורווחי. 25% לעסקה, שאר כללי C כנ&quot;ל. כל עסקה אישור פרטני ומעבר מהחזקות קיימות רק בהצעה מפורשת.</td></tr>
+<tr class="j-approve"><td>2026-10-17 16:58</td><td>רז</td><td>עדין</td><td><span class="jtag approve">אישור</span></td><td>אישור שיטה v3 (מחליף מועמדת v2): C_GENTLE עם החרגת CPI/FOMC - +5.80% ב-12ח, DD 7.39%, עמלות 94.53$. עובר רף 20% ורווחי. 15% לעסקה, שאר כללי C כנ&quot;ל. העדין הקיים לא מתחלף אוטומטית; כל שינוי בעסקה פרטנית מאושרת.</td></tr>
+<tr class="j-recommendation"><td>2026-10-17 17:02</td><td>דני</td><td>אגרסיבי</td><td><span class="jtag recommendation">המלצה</span></td><td>שיטת C v3 בלבד — טעון אישור פרטני של רז, לא מאושר לביצוע: מועמד יחיד NEAR (היחיד שעבר את כל הפילטרים), הצעת נייר אחת של 330 USDT (33% מ-1000) במחיר שיירשם בעת אישור/ביצוע, סטופ -3% ממחיר הכניסה, החזקה עד 3 ימי מסחר; אין מטבע שני שעבר ולכן אין הזמנה שנייה. התיק במזומן 1000 כיום. סיגנל מנר יומי סגור אחרון 16.10.2026, Binance, אוחזר 17.10.2026 17:01 שעון ישראל</td></tr>
+<tr class="j-recommendation"><td>2026-10-17 17:02</td><td>דני</td><td>בינוני</td><td><span class="jtag recommendation">המלצה</span></td><td>שיטת C v3 בלבד — טעון אישור פרטני של רז, לא מאושר לביצוע: מועמד יחיד NEAR, הצעת נייר אחת של 250 USDT (25% מ-1000) במחיר שיירשם בעת אישור/ביצוע, סטופ -3% מהכניסה, עד 3 ימי מסחר; אין מטבע שני שעבר. החזקות קיימות BTC ו-SOL (עלות 250.25 כל אחת, מזומן 499.50) — NEAR אינו חופף להן, וההצעה אינה מכירה/החלפה אוטומטית שלהן; כל מעבר רק באישור פרטני של רז. סיגנל מנר סגור 16.10.2026, Binance 17:01 שעון ישראל</td></tr>
+<tr class="j-recommendation"><td>2026-10-17 17:02</td><td>דני</td><td>עדין</td><td><span class="jtag recommendation">המלצה</span></td><td>שיטת C v3 בלבד — טעון אישור פרטני של רז, לא מאושר לביצוע: מועמד יחיד NEAR, הצעת נייר אחת של 150 USDT (15% מ-1000) במחיר שיירשם בעת אישור/ביצוע, סטופ -3% מהכניסה, עד 3 ימי מסחר; אין מטבע שני שעבר. החזקות קיימות BTC ו-SOL (עלות כ-151.65 ו-150.65, מזומן 696.54) — העדין אינו מתחלף אוטומטית: החזקות קיימות נשארות כמות שהן ו-NEAR הוא רק מועמד לתוספת באישור פרטני, לא החלפה. סיגנל מנר סגור 16.10.2026, Binance 17:01 שעון ישראל</td></tr>
+<tr class="j-approve"><td>2026-10-17 17:03</td><td>רז</td><td>אגרסיבי</td><td><span class="jtag approve">אישור</span></td><td>מאושר NEAR 330 USDT (פקודה אחת, 33% ממזומן 1000): אימות Binance עצמאי - סגירת 16.10 5.068, מומנטום 3י +0.56%, מעל MA50 3.7505 (+35.13%), נפח יום קודם 169.3M$, BTC סגירה 81,615.64 מעל SMA200 72,398.44. מחיר חי בבדיקה 5.052. סטופ -3% ממחיר ביצוע בפועל (בסביבות 4.90), החזקה עד 3 ימים לפי C v3, אין CPI/FOMC היום. שים לב: מומנטום חלש ומרחק גדול מ-MA50 - הגודל לא עולה מעבר ל-33%.</td></tr>
+<tr class="j-veto"><td>2026-10-17 17:03</td><td>רז</td><td>עדין</td><td><span class="jtag veto">וטו</span></td><td>וטו לתוספת NEAR 150 USDT בעדין כפי שהוצעה: נתוני NEAR אומתו, אבל בתיק כבר 2 פוזיציות (BTC+SOL ב-15% כל אחת). תוספת תיצור פוזיציה שלישית וחשיפה 45% מול C שנבדקה עם עד 2 פוזיציות ו-2x15%. NEAR לא נכנס כ&#x27;רק תוספת&#x27;. הצעת החלפה תצטרך לכלול יציאות מפורשות מבטא/SOL.</td></tr>
+<tr class="j-veto"><td>2026-10-17 17:03</td><td>רז</td><td>בינוני</td><td><span class="jtag veto">וטו</span></td><td>וטו לתוספת NEAR 250 USDT בבינוני כפי שהוצעה: כבר 2 פוזיציות (BTC+SOL ב-25% כל אחת). תוספת תיצור פוזיציה שלישית וחשיפה 75% מול C שנבדקה עם עד 2 פוזיציות ו-2x25%. הצעת החלפה תצטרך יציאות מפורשות.</td></tr>
+<tr class="j-recommendation"><td>2026-10-17 17:03</td><td>מיקה</td><td>עדין</td><td><span class="jtag recommendation">המלצה</span></td><td>C v3 (הוגש בחדר ב-17:03, נרשם להשלמה ב-18:3x לפי דגל עומרי/שחר): HOLD, אין כניסה חדשה. BTC/ETH/SOL לא עברו את כל פילטרי C: BTC סגירה 81,615.64 מעל MA50 81,284.88 (+0.41%) אך מומנטום 3י -1.87%; SOL סגירה 104.45 מתחת MA50 109.41 ומומנטום 3י -2.23%; ETH סגירה 2,423.54 מתחת MA50 2,553.31 ומומנטום 3י -2.98%. נפחים מעל 50M$, BTC מעל SMA200 72,398.44, אין CPI/FOMC היום. BTC ו-SOL קיימים נשארים בסטופים הרשומים, אין תוספת NEAR (פוזיציה שלישית). Binance Spot.</td></tr>
+<tr class="j-recommendation"><td>2026-10-17 17:03</td><td>מיקה</td><td>בינוני</td><td><span class="jtag recommendation">המלצה</span></td><td>C v3 (הוגש בחדר ב-17:03, נרשם להשלמה ב-18:3x לפי דגל עומרי/שחר): HOLD, אין כניסה חדשה. אותם נתוני Binance כמו בעדין: BTC מומנטום 3י -1.87% למרות מעל MA50, SOL ו-ETH מתחת MA50 עם מומנטום 3י שלילי, לכן אין מועמד C ב-BTC/ETH/SOL. BTC ו-SOL קיימים נשארים בסטופים הרשומים, אין תוספת NEAR (פוזיציה שלישית מעל טופ-2). אין CPI/FOMC היום.</td></tr>
+<tr class="j-recommendation"><td>2026-10-17 17:21</td><td>דני</td><td>הכל</td><td><span class="jtag recommendation">דוח</span></td><td>דוח יומי (Binance klines נר סגור 16.10, אוחזר 17:20): מומנטום 30י BTC +7.10% (1), SOL +5.87% (2), ETH +0.22% (3), BNB -0.60% (4, מתחת MA50, נפח 24ש׳ 48.7M$). BTC 81,615.64 מעל SMA200 72,324. לפי C v3 רק NEAR עובר. עדין ובינוני: HOLD, BTC/SOL ביעד 15%/25%, הפרשים מתחת 5 USDT. אגרסיבי: יעד NEAR 33% (330) לפי אישור רז 17:03, טרם בוצע. הערה: הסטופים ב-portfolio.json עדיין 12%, לא -3% של v3.</td></tr>
+<tr class="j-approve"><td>2026-10-17 17:21</td><td>רז</td><td>עדין</td><td><span class="jtag approve">אישור</span></td><td>הכרעת מעבר: BTC ו-SOL הקיימים בעדין (נכנסו 15.10) נשארים עם הסטופ המקורי הרשום ב-portfolio.json - BTC 72,880.67 ו-SOL 92.79. סטופ -3% של C חל רק על כניסות C חדשות. חציית הרמות שדני חישב (80,334/102.28) אינה אירוע סטופ לפוזיציות אלה.</td></tr>
+<tr class="j-approve"><td>2026-10-17 17:21</td><td>רז</td><td>בינוני</td><td><span class="jtag approve">אישור</span></td><td>הכרעת מעבר: BTC ו-SOL הקיימים בבינוני נשארים עם הסטופ המקורי - BTC 72,107.12 ו-SOL 92.35. סטופ -3% של C רק לכניסות חדשות. רמות דני (79,482/101.80) אינן סטופ מחייב לפוזיציות אלה.</td></tr>
+<tr class="j-recommendation"><td>2026-10-17 17:23</td><td>מיקה</td><td>אגרסיבי</td><td><span class="jtag recommendation">המלצה</span></td><td>C v3: קנייה אחת NEAR 330 USDT (33% ממזומן 1000), תואם אישור רז 17:03. אימות Binance (נר סגור 16.10, אוחזר 17:22): סגירה 5.068, מומנטום 3י +0.56%, מעל MA50 3.7505, נפח יום קודם 169.3M$, מחיר חי 5.086; BTC 81,615.64 מעל SMA200 72,398.44. סטופ -3% ממחיר ביצוע בפועל (בערך 4.93 לפי 5.086), עד 3 ימי החזקה. עלות משוערת 0.2% כ-0.66 USDT. אין מטבע שני: BTC/ETH/SOL/BNB עם מומנטום 3י שלילי ו-ETH/SOL/BNB מתחת MA50. אין CPI/FOMC היום (FOMC 28.10).</td></tr>
+<tr class="j-review"><td>2026-10-17 17:23</td><td>מיקה</td><td>הכל</td><td><span class="jtag review">ביקורת</span></td><td>ביקורת המלצות דני 17:02/17:21: NEAR 330 באגרסיבי נכון, הנתונים תואמים לשלי (מומנטום 30י BTC +7.10%, SOL +5.87%, ETH +0.22%, BNB -0.60%). הצעות NEAR 150/250 בעדין ובבינוני היו שגויות בכללים (פוזיציה שלישית מעל טופ-2) ונבלמו בווטו רז 17:03; דוח 17:21 של דני תיקן ל-HOLD. פער קטן: SMA200 של BTC אצל דני 72,324 מול 72,398.44 אצלי ואצל רז, לא משנה את המסקנה. עדין ובינוני: אין עסקה היום (BTC/SOL נשארים לפי הכרעת רז 17:21), סה״כ עסקה אחת בכל התיקים.</td></tr>
+<tr class="j-approve"><td>2026-10-17 17:48</td><td>רז</td><td>אגרסיבי</td><td><span class="jtag approve">אישור</span></td><td>בקרה יומית: מאושר NEAR 330 USDT (33% ממזומן 1000, פקודה אחת) לפי המלצת מיקה 17:23. אימות Binance עצמאי ב-17:4x: סגירה 16.10 5.068, מחיר חי 5.037 (תזוזת שוק מ-5.086 של מיקה, לא פער בדוח), מעל MA50 3.7505, נפח יום קודם 169.3M$ (מעל 50M$), BTC סגירה 81,615.64 מעל SMA200 72,398.44, אין CPI/FOMC היום. סטופ -3% ממחיר ביצוע בפועל (בערך 4.89 לפי 5.037). מטבע שני לא נכנס: ETH/SOL/BNB מתחת MA50.</td></tr>
+<tr class="j-approve"><td>2026-10-17 17:48</td><td>רז</td><td>עדין</td><td><span class="jtag approve">אישור</span></td><td>בקרה יומית: HOLD מאושר בעדין, אין כניסה חדשה. BTC 81,567.66 חי ו-SOL 104.21 חי, מעל הסטופים הרשומים (72,880.67/92.79). הערה: SOL סגר 104.45 מתחת MA50 109.41 ולכן לא עומד בפילטר C v3 - באיזון הבא נדרשת הצעת יציאה או נימוק. פער SMA200 של דני (72,324 מול 72,398.44 בבינאנס) דורש הסבר, לא משנה מסקנה.</td></tr>
+<tr class="j-approve"><td>2026-10-17 17:48</td><td>רז</td><td>בינוני</td><td><span class="jtag approve">אישור</span></td><td>בקרה יומית: HOLD מאושר בבינוני, אין כניסה חדשה. BTC 81,567.66 ו-SOL 104.21 חיים, מעל הסטופים הרשומים (72,107.12/92.35). הערה: SOL מתחת MA50 (104.45 מול 109.41) ולא עומד בפילטר C v3 - באיזון הבא נדרשת הצעת יציאה או נימוק. פער SMA200 של דני דורש הסבר.</td></tr>
+<tr class="j-execution"><td>2026-10-17 17:52</td><td>מנהל מסחר</td><td>הכל</td><td><span class="jtag execution">ביצוע</span></td><td>לפי אישור רז 17:48: אגרסיבי קנה NEAR 330 USDT ב-5.032 (מילוי 5.0370 כולל החלקה, עמלה 0.33), סטופ 4.8859 (-3%), החזקה עד 20.10. עדין ובינוני HOLD BTC+SOL. MTM: עדין 994.02 (-0.60%); בינוני 995.83 (-0.42%); אגרסיבי 998.62 (-0.14%). סטופים לא נפגעו. הערת רז: SOL מתחת MA50 - באיזון הבא נדרשת הצעת יציאה או נימוק.</td></tr>
+<tr class="j-lesson"><td>2026-10-17 18:30</td><td>עומרי</td><td>עדין</td><td><span class="jtag lesson">לקח</span></td><td>0 עסקאות היום (HOLD מאושר ע״י רז 17:48). שווי 993.85 (−0.30% יומי, −0.61% מצטבר), ירידה מקסימלית 1.06% לפי נרות שעה ב-Binance מאז 15.10 — רחוק מבדיקת v3 (7.39%), אבל SOL 103.86 מתחת MA50 109.41 ולא עומד בפילטר C v3, כך שחצי מהחשיפה מחוץ לשיטה עד האיזון הבא.</td></tr>
+<tr class="j-lesson"><td>2026-10-17 18:30</td><td>עומרי</td><td>בינוני</td><td><span class="jtag lesson">לקח</span></td><td>שווי 995.56 (−0.51% יומי, −0.44% מצטבר), ירידה מקסימלית 1.75% מהשיא 1008.50 — פי 1.65 מהעדין (1.06%), בערך כיחס החשיפה 50%/30%. מאז אישור HOLD אתמול 17:50 BTC ירד 0.98% ו-SOL ירד 2.02%, כלומר SOL שמתחת MA50 נתן את רוב הירידה.</td></tr>
+<tr class="j-lesson"><td>2026-10-17 18:30</td><td>עומרי</td><td>אגרסיבי</td><td><span class="jtag lesson">לקח</span></td><td>עסקה אחת: NEAR 330 USDT, מחיר שוק 5.032 אומת בנר דקה 14:50 UTC ב-Binance, מילוי 5.037032, עמלה 0.33. כ-40 דקות אחרי הכניסה NEAR 4.966 (−1.4% מהמילוי) ורק 1.6% מעל הסטופ 4.8859 — בסטופ 3% תנודה רגילה של אלט יכולה לסגור את הפוזיציה תוך יום. שווי 995.02 (−0.50%).</td></tr>
+<tr class="j-review"><td>2026-10-17 18:30</td><td>עומרי</td><td>הכל</td><td><span class="jtag review">ביקורת</span></td><td>רז (16.10 17:50, אופק 24ש׳ עד 17:50 היום, נרות דקה Binance): וטו STRK נכון — 0.07625→0.06798 (−10.85%); אישורי HOLD BTC/SOL שגויים במחיר — BTC 82,374→81,568 (−0.98%), SOL 106.44→104.29 (−2.02%), נכונים בכללים. היום 1/2 מחיר, 2/2 כללים. מצטבר: 2/4 מחיר, 4/4 כללים.</td></tr>
+<tr class="j-review"><td>2026-10-17 18:30</td><td>עומרי</td><td>הכל</td><td><span class="jtag review">ביקורת</span></td><td>נוי (מאקרו 16.10 16:46, אזהרת סיכון לא חוסמת): נכון במחיר — BTC 81,966→81,488 (−0.58%), SOL 105.53→103.86 (−1.58%), NEAR 5.284→5.046 (−4.50%); נכון בכללים (16.10 לא יום אירוע). היום 1/1 מחיר, 1/1 כללים. מצטבר: 1/2 מחיר, 2/2 כללים.</td></tr>
+<tr class="j-review"><td>2026-10-17 18:30</td><td>עומרי</td><td>הכל</td><td><span class="jtag review">ביקורת</span></td><td>מיקה (סט 16.10 17:26): HOLD BTC/SOL שגוי במחיר — BTC 82,396→81,560 (−1.01%), SOL 106.35→104.28 (−1.95%); קניית STRK 998 שגויה במחיר — 0.07733→0.06767 (−12.49%) ובכללים (שני נרות יומיים סגורים מתחת 50M$, נבלם בווטו). היום 0/2 מחיר, 1/2 כללים. מצטבר: 1/4 מחיר, 2/3 כללים.</td></tr>
+<tr class="j-review"><td>2026-10-17 18:30</td><td>עומרי</td><td>הכל</td><td><span class="jtag review">ביקורת</span></td><td>דני (סט 16.10 17:22): HOLD BTC/SOL שגוי במחיר — BTC 82,292→81,511 (−0.95%), SOL 106.20→104.17 (−1.91%); קניית STRK ב-3 מנות שגויה במחיר — 0.07715→0.06805 (−11.80%) ובכללים (נפח). היום 0/2 מחיר, 1/2 כללים. מצטבר: 1/4 מחיר, 2/3 כללים.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
 <script>
-const ASOF="15.10.2026 09:10 (לפני הביצוע של 18:00)";
+const ASOF="17.10.2026 17:50 (MTM אחרי ביצוע, נבדק ע״י עומרי 18:30)";
 const P=[
- {name:"עדין",start:1000,cash:888.73,h:{BTC:0.00095706,SOL:0.2794}},
- {name:"בינוני",start:1000,cash:1000,h:{}},
- {name:"אגרסיבי",start:1000,cash:1000,h:{}}
+ {name:"עדין",start:1000.0,cash:696.5376,h:{BTC:0.00182929,SOL:1.42730857}}, {name:"בינוני",start:1000.0,cash:499.5,h:{BTC:0.00305102,SOL:2.38220383}}, {name:"אגרסיבי",start:1000.0,cash:669.67,h:{NEAR:65.5147714}}
 ];
 document.getElementById('asof').textContent=ASOF;
 async function tick(){
@@ -29,4 +248,6 @@ async function tick(){
  document.getElementById('ts').textContent=new Date().toLocaleTimeString('he-IL');
 }
 tick();setInterval(tick,10000);
-</script></body></html>
+</script>
+</body>
+</html>
